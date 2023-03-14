@@ -1,1 +1,82 @@
-
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <style>
+      canvas {
+        display: block;
+        margin: 0 auto;
+        
+      }
+    </style>
+  </head>
+  <body>
+    <table id="data-table">
+      <tr>
+        <th>Data Label</th>
+        <th>Data Value</th>
+      </tr>
+      <tr>
+        <td>js</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td>java</td>
+        <td>500</td>
+      </tr>
+      <tr>
+        <td>python</td>
+        <td>300</td>
+      </tr>
+      <tr>
+        <td>sql</td>
+        <td>250</td>
+      </tr>
+      <tr>
+        <td>mongodb</td>
+        <td>400</td>
+      </tr>
+    </table>
+    <br>
+    <button id="bar-button">Bar Chart</button>
+    <button id="pie-button">Pie Chart</button>
+    <br><br>
+    <canvas id="chart"></canvas>
+    <script>
+      const table = document.getElementById("data-table");
+      const data = {
+        labels: [],
+        datasets: [
+          {
+            label: "Data",
+            data: []
+          }
+        ]
+      };
+      for (let i = 1; i < table.rows.length; i++) {
+        data.labels.push(table.rows[i].cells[0].innerHTML);
+        data.datasets[0].data.push(table.rows[i].cells[1].innerHTML);
+      }
+      let chart;
+      const barButton = document.getElementById("bar-button");
+      barButton.addEventListener("click", function() {
+        if (chart) {
+          chart.destroy();
+        }
+        chart = new Chart(document.getElementById("chart").getContext("2d"), {
+          type: "bar",
+          data: data
+        });
+      });
+      const pieButton = document.getElementById("pie-button");
+      pieButton.addEventListener("click", function() {
+        if (chart) {
+          chart.destroy();
+        }
+        chart = new Chart(document.getElementById("chart").getContext("2d"), {
+          type: "pie",
+          data: data
+        });
+      });
+    </script>
+  </body>
+</html>
